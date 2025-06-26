@@ -1,7 +1,7 @@
 //*This is a class for the buttons that are used to add a new item(habit , bad habit or task) */
 //Add buttons inherit from the DataB class
 import java.util.Scanner;
-import mypackage.NameB;
+import NameB.java;
 
 public class AddB extends DataB {
     private String name = null;
@@ -20,10 +20,10 @@ public class AddB extends DataB {
      * * @return void
      * */
     public void GetInfo() {Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter info for " + nameText + ":");
+        System.out.println("Enter info for " + name + ":");
         String input = scanner.nextLine();
-        System.out.println(process(input));
-    }
+        System.out.println(Process(input));
+    
         
         public String OverWrite(String newName) {
         this.name = newName;

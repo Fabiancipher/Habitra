@@ -1,4 +1,4 @@
-import java.util.scanner;
+import java.util.Scanner;
 // This is a class for the buttons that are used to set a name for a task or item.
 // NameB class extends DataB and provides methods to set and process names.
 public class NameB extends DataB {

@@ -1,15 +1,16 @@
 import java.time.LocalDateTime;
-import java.util.scanner;
+import java.util.Scanner;
 // This is a class for the buttoms that are used to set the deadline for a task.
 // DeadlineB class extends DataB and provides methods to set and process deadlines.
 public class DeadlineB extends DataB {
     private String name = null;
     private String timeInput = null;
 
-    public TimeB(String name) {
+    public DeadlineB(String name) {
         this.name = name;
     }
 
+    @Override
     public String Process(String receivedData) {
         return "Processed time for " + this.name + " with info: " + receivedData;
     }
@@ -20,7 +21,7 @@ public class DeadlineB extends DataB {
      * @param timeInput The input string for the deadline.
      * @return The deadline in seconds since epoch.
      */
-    public Integer DetTime(String timeInput) {
+    public Integer DetTime() {
 
         System.out.println("Please enter the deadline in the format 'yyyy-mm-dd ':");
         Scanner scanner = new Scanner(System.in);
