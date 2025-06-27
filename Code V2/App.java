@@ -250,6 +250,11 @@ public class App{
                 if(name.getText().equals("Name : "))
                     name.setText("");
                 }
+                @Override
+                public void focusLost(FocusEvent e){
+                if(name.getText().isBlank())
+                    name.setText("Name : ");
+                }
                 });
             break;
 
@@ -259,6 +264,11 @@ public class App{
                 public void focusGained(FocusEvent e){
                 if(time.getText().equals("Time : "))
                     time.setText("");
+                }
+                @Override
+                public void focusLost(FocusEvent e){
+                if(time.getText().isBlank())
+                    time.setText("Time : ");
                 }
                 });
             break;
@@ -270,6 +280,11 @@ public class App{
                 if(diff.getText().equals("Difficulty : "))
                     diff.setText("");
                 }
+                @Override
+                public void focusLost(FocusEvent e){
+                if(diff.getText().isBlank())
+                    diff.setText("Difficulty : ");
+                }
                 });
             break;
 
@@ -279,6 +294,11 @@ public class App{
                 public void focusGained(FocusEvent e){
                 if(deadline.getText().equals("Deadline : "))
                     deadline.setText("");
+                }
+                @Override
+                public void focusLost(FocusEvent e){
+                if(deadline.getText().isBlank())
+                    deadline.setText("Deadline : ");
                 }
                 });
             break;
