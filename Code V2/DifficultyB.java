@@ -1,4 +1,5 @@
-import java.util.sacanner;
+import java.util.Scanner;
+
 // This is a class for the buttons that are used to set the difficulty level of a task.
 // DifficultyB class extends DataB and provides methods to set and process difficulty levels.
 public class DifficultyB extends DataB {
@@ -9,9 +10,11 @@ public class DifficultyB extends DataB {
         this.name = name;
     }
 
+    @Override
     public String Process(String receivedData) {
         return "Processed difficulty for " + this.name + " with info: " + receivedData;
     }
+
     /**
      * This method prompts the user to enter a difficulty level for the current object via the console,
      * reads the input, and returns the difficulty level.
@@ -19,11 +22,11 @@ public class DifficultyB extends DataB {
      *
      * @return The difficulty level as a String.
      */
-    public String GetDifficulty(difficultyInput) {
+    public String GetDifficulty() {
         System.out.println("Please enter the difficulty level (Easy, Medium, Hard):");
         Scanner scanner = new Scanner(System.in);
-        String difficultyInput = scanner.nextLine();
-        
+        this.difficultyInput = scanner.nextLine();
+
         if (difficultyInput.equalsIgnoreCase("Easy") || 
             difficultyInput.equalsIgnoreCase("Medium") || 
             difficultyInput.equalsIgnoreCase("Hard")) {

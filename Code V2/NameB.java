@@ -19,8 +19,9 @@ public class NameB extends DataB {
      */
     public String GetName() {
         System.out.println("Please enter the name:");
-        Scanner scanner = new Scanner(System.in);
-        this.name = scanner.nextLine();
+        try (Scanner scanner = new Scanner(System.in)) {
+            this.name = scanner.nextLine();
+        }
         return this.name;
     }
 }

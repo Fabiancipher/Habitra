@@ -2,7 +2,7 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 // This is a class for the buttoms that are used to set the deadline for a task.
 // DeadlineB class extends DataB and provides methods to set and process deadlines.
-public class DeadlineB extends DataB {
+public class DeadlineB extends DataB{
     private String name = null;
     private String timeInput = null;
 

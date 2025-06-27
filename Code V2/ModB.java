@@ -1,11 +1,10 @@
 import java.util.Scanner;
-import mypackage.NameB;
 
 // ModB class extends DataB and provides methods to modify and process a name.
 // It allows setting a name, processing received data, and interactively updating the name.
 public class ModB extends DataB {
     private String name = null;
-
+    private NameB nameObj;
     public ModB(String name) {
        this.name = new NameB(name);
     }

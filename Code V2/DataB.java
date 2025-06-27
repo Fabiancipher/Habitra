@@ -1,7 +1,7 @@
 /**This is a class for the buttons used to receive and process data
  */
 //Data buttons inherit from the Button class
- public class DataB extends Button{
+ public class DataB implements Button{
     public DataB(){
 
     }
@@ -19,5 +19,9 @@
      */
     public String Process(String receivedData){
         return "null";
+    }
+
+    public String Send() {
+        return "Sending data";
     }
  }

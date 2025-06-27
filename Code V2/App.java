@@ -62,7 +62,7 @@ public class App{
         //Creates a button that goes back to the main panel
         back= new JButton("Back");
         back.setBounds(1400, 20, 100, 60);
-        back.addActionListener(e->{
+        back.addActionListener( e-> {
             newPanel.setVisible(false);
             panel.setVisible(true);
         });
@@ -78,15 +78,15 @@ public class App{
         label.setBounds(725, 20, 100, 20);
         label.setVisible(true);
 
-        name = new JTextField("Name");
+        name = new JTextField("Name : ");
         name.setBounds(525, 100, 500, 100);
         name.setVisible(true);
 
-        time= new JTextField("Time");
+        time= new JTextField("Time : ");
         time.setBounds(525, 300, 500, 100);
         time.setVisible(true);
 
-        diff= new JTextField("Difficulty");
+        diff= new JTextField("Difficulty : ");
         diff.setBounds(525, 500, 500, 100);
         diff.setVisible(true);
 
@@ -104,15 +104,15 @@ public class App{
         label.setBounds(725, 20, 100, 20);
         label.setVisible(true);
 
-        name = new JTextField("Name");
+        name = new JTextField("Name : ");
         name.setBounds(525, 100, 500, 100);
         name.setVisible(true);
 
-        deadline= new JTextField("Deadline");
+        deadline= new JTextField("Deadline : ");
         deadline.setBounds(525, 300, 500, 100);
         deadline.setVisible(true);
 
-        diff= new JTextField("Difficulty");
+        diff= new JTextField("Difficulty : ");
         diff.setBounds(525, 500, 500, 100);
         diff.setVisible(true);
 
@@ -130,15 +130,15 @@ public class App{
         label.setBounds(725, 20, 100, 20);
         label.setVisible(true);
 
-        name = new JTextField("Name");
+        name = new JTextField("Name : ");
         name.setBounds(525, 100, 500, 100);
         name.setVisible(true);
 
-        time= new JTextField("Time");
+        time= new JTextField("Time : ");
         time.setBounds(525, 300, 500, 100);
         time.setVisible(true);
 
-        diff= new JTextField("Difficulty");
+        diff= new JTextField("Difficulty : ");
         diff.setBounds(525, 500, 500, 100);
         diff.setVisible(true);
 
@@ -191,7 +191,7 @@ public class App{
         addButton();
         add.addActionListener(e->{
             try{
-                writer= new FileWriter("archivo.txt");
+                writer= new FileWriter("archivo.txt",true);
                 writer.write(name.getText());
                 writer.write(time.getText());
                 writer.write(diff.getText());

@@ -1,10 +1,10 @@
 import java.time.LocalDateTime;
-import java.util.scanner;
+import java.util.Scanner;
 // This class is used to put the period of time in which the user wants to track their habits or tasks.
 // It extends the DataB class and provides methods to process time information.
 public class TimeB extends DataB {
-    private String name = null;
-    private String timeInput = null;
+    private String name ;
+    private String timeInput ;
 
     public TimeB(String name) {
         this.name = name;
