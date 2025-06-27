@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.*;
 
 public class App{
@@ -81,14 +83,17 @@ public class App{
         name = new JTextField("Name : ");
         name.setBounds(525, 100, 500, 100);
         name.setVisible(true);
+        textDissapear(1);
 
         time= new JTextField("Time : ");
         time.setBounds(525, 300, 500, 100);
         time.setVisible(true);
+        textDissapear(2);
 
         diff= new JTextField("Difficulty : ");
         diff.setBounds(525, 500, 500, 100);
         diff.setVisible(true);
+        textDissapear(3);
 
         addButtonHabit();
 
@@ -104,17 +109,21 @@ public class App{
         label.setBounds(725, 20, 100, 20);
         label.setVisible(true);
 
-        name = new JTextField("Name : ");
+        name = new JTextField();
+        name.setText("Name : ");
         name.setBounds(525, 100, 500, 100);
         name.setVisible(true);
+        textDissapear(1);
 
         deadline= new JTextField("Deadline : ");
         deadline.setBounds(525, 300, 500, 100);
         deadline.setVisible(true);
+        textDissapear(4);
 
         diff= new JTextField("Difficulty : ");
         diff.setBounds(525, 500, 500, 100);
         diff.setVisible(true);
+        textDissapear(3);
 
         addButtonTask();
 
@@ -133,14 +142,17 @@ public class App{
         name = new JTextField("Name : ");
         name.setBounds(525, 100, 500, 100);
         name.setVisible(true);
+        textDissapear(1);
 
         time= new JTextField("Time : ");
         time.setBounds(525, 300, 500, 100);
         time.setVisible(true);
+        textDissapear(2);
 
         diff= new JTextField("Difficulty : ");
         diff.setBounds(525, 500, 500, 100);
         diff.setVisible(true);
+        textDissapear(3);
 
         addButtonHabit();
 
@@ -227,5 +239,54 @@ public class App{
         });
         
         newPanel.add(add);
+    }
+
+    private static void textDissapear(int id){
+        switch (id) {
+            case 1:
+                name.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusGained(FocusEvent e){
+                if(name.getText().equals("Name : "))
+                    name.setText("");
+                }
+                });
+            break;
+
+            case 2:
+                time.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusGained(FocusEvent e){
+                if(time.getText().equals("Time : "))
+                    time.setText("");
+                }
+                });
+            break;
+
+            case 3:
+                diff.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusGained(FocusEvent e){
+                if(diff.getText().equals("Difficulty : "))
+                    diff.setText("");
+                }
+                });
+            break;
+
+            case 4:
+                deadline.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusGained(FocusEvent e){
+                if(deadline.getText().equals("Deadline : "))
+                    deadline.setText("");
+                }
+                });
+            break;
+        
+            default:
+                System.out.println("Impossible to dissapear placeholder");
+                break;
+        }
+        
     }
 }
