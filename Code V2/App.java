@@ -1,7 +1,6 @@
-import java.util.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import Item;
 
 public class App{
     //Declares objects as attributes, this helps to simply initiate them instead of declaring them every time we want one of these
@@ -25,6 +24,7 @@ public class App{
     private static void event(int id){
         panel.setVisible(false);
         newPanel = new JPanel();
+        newPanel.setBounds(-400, 0, 1920, 1080);
         switch (id) {
             case 1:
                 newPanel.setBackground(Color.decode("#911bcc"));
