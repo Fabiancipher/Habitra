@@ -6,10 +6,15 @@ public class Task implements Item{
     private int diff;
     private Boolean status;
 
-    public Task(String name, String deadline, int exp, int difficulty, boolean status){
+     /**Constructor for tasks
+     * @param name: The name of the habit
+     * @param deadline: Date for completion
+     * @param difficulty: The difficulty of the habit
+     * @param status: If the habit is completed or not
+     */
+    public Task(String name, String deadline, int difficulty, boolean status){
         this.taskName= name;
         this.deadline= deadline;
-        this.exp= exp; 
         this.diff= difficulty;
         this.status= status;
     }
@@ -34,12 +39,14 @@ public class Task implements Item{
         return this.status;
     }
 
+    /**Checks if the task is completed */
     public Boolean IsCompleted(){
         this.status=false;
         return this.status;
     }
 
-    public Integer CalcExp(){
+    /**Calculates experience */
+    public void CalcExp(){
         if(this.diff==1){
             this.exp=1;
         }
@@ -49,9 +56,9 @@ public class Task implements Item{
         else if(this.diff==3){
             this.exp=3;
         }
-        return exp;
     }
 
+    /**Returns task data */
     public String toString(){
         return taskName+deadline+diff;
     }

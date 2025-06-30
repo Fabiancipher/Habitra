@@ -2,6 +2,6 @@
 
 public interface Item{
     public abstract Boolean IsCompleted();
-    public abstract Integer CalcExp();
+    public abstract void CalcExp();
     public abstract String toString();
 }

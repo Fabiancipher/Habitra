@@ -6,10 +6,15 @@ public class Habit implements Item{
     private int diff;
     private Boolean status;
 
-    public Habit(String name, int time, int exp, int difficulty, boolean status){
+    /**Constructor for habits
+     * @param name: The name of the habit
+     * @param time: Periodicy of the habit
+     * @param difficulty: The difficulty of the habit
+     * @param status: If the habit is completed or not
+     */
+    public Habit(String name, int time, int difficulty, boolean status){
         this.habName= name;
         this.time= time;
-        this.exp= exp; 
         this.diff= difficulty;
         this.status= status;
     }
@@ -34,12 +39,14 @@ public class Habit implements Item{
         return this.status;
     }
 
+    /**Checks if the habit is completed */
     public Boolean IsCompleted(){
         this.status=false;
         return this.status;
     }
 
-    public Integer CalcExp(){
+    /**Calculates experience */
+    public void CalcExp(){
         if(this.diff==1){
             this.exp=1;
         }
@@ -49,9 +56,8 @@ public class Habit implements Item{
         else if(this.diff==3){
             this.exp=3;
         }
-        return exp;
     }
-
+    /**Returns habit data */
     public String toString(){
         return habName+time+diff;
     }
