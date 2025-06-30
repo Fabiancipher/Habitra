@@ -13,6 +13,7 @@ public class App{
     public static JLabel label;
     public static FileWriter writer;
     public static void main(String[] args) {
+        //Try to create a text file
         try{
             File archive= new File("archivo.txt");
             if(archive.createNewFile())
@@ -25,7 +26,7 @@ public class App{
         }
         startFrame();
         startButtons();
-        
+        //Set main panel
         panel.setLayout(null);
         panel.add(addH);
         panel.add(addT);
@@ -39,7 +40,7 @@ public class App{
     private static void event(int id){
         panel.setVisible(false);
         newPanel = new JPanel();
-        newPanel.setBounds(-400, 0, 1920, 1080);
+        newPanel.setBounds(0, 0, 1920, 1080);
         switch (id) {
             case 1:
                 newPanel.setBackground(Color.decode("#911bcc"));

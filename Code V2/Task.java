@@ -6,6 +6,34 @@ public class Task implements Item{
     private int diff;
     private Boolean status;
 
+    public Task(String name, String deadline, int exp, int difficulty, boolean status){
+        this.taskName= name;
+        this.deadline= deadline;
+        this.exp= exp; 
+        this.diff= difficulty;
+        this.status= status;
+    }
+
+    public String getName(){
+        return this.taskName;
+    }
+
+    public String getDeadline(){
+        return this.deadline;
+    }
+
+    public int getExp(){
+        return this.exp;
+    }
+
+    public int getDiff(){
+        return this.diff;
+    }
+
+    public Boolean getStatus(){
+        return this.status;
+    }
+
     public Boolean IsCompleted(){
         this.status=false;
         return this.status;
