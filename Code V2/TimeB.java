@@ -20,10 +20,10 @@ public class TimeB extends DataB {
      * @return The total minutes since the start of the specified time period.
      */
     public Integer DetTime(String timeInput) {
+        
         if (timeInput.equals("Daily")){
-             public Integer DetTime() {
-        LocalDateTime now = LocalDateTime.now();
-        return now.getHour() * 60 + now.getMinute();
+            LocalDateTime now = LocalDateTime.now();
+            return now.getHour() * 60 + now.getMinute();
         } else if (timeInput.equals("Weekly")) {
             LocalDateTime now = LocalDateTime.now();
             return now.getDayOfWeek().getValue() * 24 * 60 + now.getHour() * 60 + now.getMinute();
