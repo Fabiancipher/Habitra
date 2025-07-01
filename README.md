@@ -15,6 +15,6 @@ In this workshop, we discuss the conceptual design of the app, with classes and 
 ### [Workshop 3💪](https://github.com/Fabiancipher/OOP_project/tree/main/Workshop_3)
 In this workshop, SOLID was implemented, and we discuss how it affected our design choices coming forward and retroactively.
 
-### [Workshop 4](https://github.com/Fabiancipher/OOP_project/tree/main/Workshop_4)
+### [Workshop 4🖥️✨](https://github.com/Fabiancipher/OOP_project/tree/main/Workshop_4)
 In this workshop, we discuss how GUI was implementated with Java Swing
 
