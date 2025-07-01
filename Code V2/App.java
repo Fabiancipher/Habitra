@@ -13,6 +13,7 @@ public class App{
     public static JLabel label;
     public static FileWriter writer;
     public static void main(String[] args) {
+        //Try to create a text file
         try{
             File archive= new File("archivo.txt");
             if(archive.createNewFile())
@@ -25,7 +26,7 @@ public class App{
         }
         startFrame();
         startButtons();
-        
+        //Set main panel
         panel.setLayout(null);
         panel.add(addH);
         panel.add(addT);
@@ -39,7 +40,7 @@ public class App{
     private static void event(int id){
         panel.setVisible(false);
         newPanel = new JPanel();
-        newPanel.setBounds(-400, 0, 1920, 1080);
+        newPanel.setBounds(0, 0, 1920, 1080);
         switch (id) {
             case 1:
                 newPanel.setBackground(Color.decode("#911bcc"));
@@ -250,6 +251,11 @@ public class App{
                 if(name.getText().equals("Name : "))
                     name.setText("");
                 }
+                @Override
+                public void focusLost(FocusEvent e){
+                if(name.getText().isBlank())
+                    name.setText("Name : ");
+                }
                 });
             break;
 
@@ -259,6 +265,11 @@ public class App{
                 public void focusGained(FocusEvent e){
                 if(time.getText().equals("Time : "))
                     time.setText("");
+                }
+                @Override
+                public void focusLost(FocusEvent e){
+                if(time.getText().isBlank())
+                    time.setText("Time : ");
                 }
                 });
             break;
@@ -270,6 +281,11 @@ public class App{
                 if(diff.getText().equals("Difficulty : "))
                     diff.setText("");
                 }
+                @Override
+                public void focusLost(FocusEvent e){
+                if(diff.getText().isBlank())
+                    diff.setText("Difficulty : ");
+                }
                 });
             break;
 
@@ -279,6 +295,11 @@ public class App{
                 public void focusGained(FocusEvent e){
                 if(deadline.getText().equals("Deadline : "))
                     deadline.setText("");
+                }
+                @Override
+                public void focusLost(FocusEvent e){
+                if(deadline.getText().isBlank())
+                    deadline.setText("Deadline : ");
                 }
                 });
             break;
