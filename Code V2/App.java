@@ -1,5 +1,5 @@
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.*;
@@ -7,11 +7,17 @@ import java.io.*;
 public class App{
     //Declares objects as attributes, this helps to simply initiate them instead of declaring them every time we want one of these
     public static JPanel panel, newPanel;
-    public static JFrame frame;
-    public static JButton addH, addT, addB, back, add;
-    public static JTextField name, deadline, time, diff;
-    public static JLabel label;
+    public static JFrame frame, popupFrame;
+    public static JButton addH, addT, addB, back, add,
+    daily, weekly, monthly,
+    easy, medium, hard;
+    public static JTextField name, deadline;
+    public static JLabel label, time, diff;
     public static FileWriter writer;
+    public static ItemList itemList= new ItemList();
+    public static JList<String> habits= new JList<>(itemList.habits.stream().map(Habit::toString).toArray(String[]::new));
+    public static Integer timeSelected, diffSelected;
+
     public static void main(String[] args) {
         //Try to create a text file
         try{
@@ -24,6 +30,7 @@ public class App{
         catch(IOException e){
             System.out.println("Can't create file: "+e);
         }
+        
         startFrame();
         startButtons();
         //Set main panel
@@ -33,7 +40,6 @@ public class App{
         panel.add(addB);
 
         panel.setBackground(Color.decode("#472287"));
-
 
     }
     /**Redirects to the corresponfing panel */
@@ -81,23 +87,24 @@ public class App{
         label.setBounds(725, 20, 100, 20);
         label.setVisible(true);
 
-        name = new JTextField("Name : ");
+        name = new JTextField();
+        name.setText("Name : ");
         name.setBounds(525, 100, 500, 100);
         name.setVisible(true);
         textDissapear(1);
 
-        time= new JTextField("Time : ");
-        time.setBounds(525, 300, 500, 100);
+        time= new JLabel("Time: ");
+        time.setBounds(525, 300, 100, 20);
         time.setVisible(true);
-        textDissapear(2);
 
-        diff= new JTextField("Difficulty : ");
-        diff.setBounds(525, 500, 500, 100);
+        diff= new JLabel();
+        diff.setText("Difficulty: ");
+        diff.setBounds(525, 500, 100, 20);
         diff.setVisible(true);
-        textDissapear(3);
 
         addButtonHabit();
 
+        startHabitButtons();
         newPanel.add(label);
         newPanel.add(name);
         newPanel.add(time);
@@ -119,13 +126,11 @@ public class App{
         deadline= new JTextField("Deadline : ");
         deadline.setBounds(525, 300, 500, 100);
         deadline.setVisible(true);
-        textDissapear(4);
+        textDissapear(2);
 
-        diff= new JTextField("Difficulty : ");
-        diff.setBounds(525, 500, 500, 100);
+        diff= new JLabel("Difficulty: ");
+        diff.setBounds(525, 500, 100, 20);
         diff.setVisible(true);
-        textDissapear(3);
-
         addButtonTask();
 
         newPanel.add(label);
@@ -145,15 +150,15 @@ public class App{
         name.setVisible(true);
         textDissapear(1);
 
-        time= new JTextField("Time : ");
+        time= new JLabel("Time: ");
+        time.setForeground(Color.decode("#f0e9e9"));
         time.setBounds(525, 300, 500, 100);
         time.setVisible(true);
-        textDissapear(2);
 
-        diff= new JTextField("Difficulty : ");
+        diff= new JLabel("Difficulty: ");  
+        diff.setForeground(Color.decode("#f0e9e9"));
         diff.setBounds(525, 500, 500, 100);
         diff.setVisible(true);
-        textDissapear(3);
 
         addButtonHabit();
 
@@ -178,12 +183,14 @@ public class App{
         addH.setBounds(30, 500, 100, 60);
         addH.addActionListener(e -> {
             event(1);
+            System.out.println("Add Habit button clicked");
         });
         
         addT= new JButton("AddTask");
         addT.setBounds(30, 600, 100, 60);
         addT.addActionListener(e -> {
             event(2);
+            System.out.println("Add Task button clicked");
         });
 
         addB= new JButton("AddBadHabit");
@@ -203,11 +210,10 @@ public class App{
     private static void addButtonHabit(){
         addButton();
         add.addActionListener(e->{
+        popupFrame= new JFrame("Habit Added");
             try{
                 writer= new FileWriter("archivo.txt",true);
                 writer.write(name.getText());
-                writer.write(time.getText());
-                writer.write(diff.getText());
                 writer.close();
             }
             catch(IOException x){
@@ -260,36 +266,6 @@ public class App{
             break;
 
             case 2:
-                time.addFocusListener(new FocusAdapter() {
-                @Override
-                public void focusGained(FocusEvent e){
-                if(time.getText().equals("Time : "))
-                    time.setText("");
-                }
-                @Override
-                public void focusLost(FocusEvent e){
-                if(time.getText().isBlank())
-                    time.setText("Time : ");
-                }
-                });
-            break;
-
-            case 3:
-                diff.addFocusListener(new FocusAdapter() {
-                @Override
-                public void focusGained(FocusEvent e){
-                if(diff.getText().equals("Difficulty : "))
-                    diff.setText("");
-                }
-                @Override
-                public void focusLost(FocusEvent e){
-                if(diff.getText().isBlank())
-                    diff.setText("Difficulty : ");
-                }
-                });
-            break;
-
-            case 4:
                 deadline.addFocusListener(new FocusAdapter() {
                 @Override
                 public void focusGained(FocusEvent e){
@@ -307,7 +283,107 @@ public class App{
             default:
                 System.out.println("Impossible to dissapear placeholder");
                 break;
-        }
-        
+        }    
+    }
+
+    public static void startHabitButtons(){
+        startTimeButtons();
+        startDiffButtons();
+    }
+
+    public static void startTimeButtons(){
+        daily= new JButton("Daily");
+        daily.setBounds(625, 300, 100, 40);
+        daily.setVisible(true);
+        daily.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                daily.setBackground(Color.decode("#101b82"));
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                daily.setBackground(Color.decode("#ffffff"));
+            }
+        });
+
+        monthly= new JButton("Monthly");
+        monthly.setBounds(725, 300, 100, 40);
+        monthly.setVisible(true);
+        monthly.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                monthly.setBackground(Color.decode("#101b82"));
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                monthly.setBackground(Color.decode("#ffffff"));
+            }
+        });
+
+        weekly= new JButton("Weekly");
+        weekly.setBounds(825, 300, 100, 40);
+        weekly.setVisible(true);
+        weekly.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                weekly.setBackground(Color.decode("#101b82"));
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                weekly.setBackground(Color.decode("#ffffff"));
+            }
+        });
+
+        newPanel.add(daily);
+        newPanel.add(monthly);
+        newPanel.add(weekly);
+    }
+
+    public static void startDiffButtons(){
+        easy= new JButton("Easy");
+        easy.setBounds(625, 500, 100, 40);
+        easy.setVisible(true);
+        easy.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                easy.setBackground(Color.decode("#101b82"));
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                easy.setBackground(Color.decode("#ffffff"));
+            }
+        });
+
+        medium= new JButton("Medium");
+        medium.setBounds(725, 500, 100, 40);
+        medium.setVisible(true);
+        medium.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                medium.setBackground(Color.decode("#101b82"));
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                medium.setBackground(Color.decode("#ffffff"));
+            }
+        });
+
+        hard= new JButton("Hard");
+        hard.setBounds(825, 500, 100, 40);
+        hard.setVisible(true);
+        hard.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                hard.setBackground(Color.decode("#101b82"));
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                hard.setBackground(Color.decode("#ffffff"));
+            }
+        });
+
+        newPanel.add(easy);
+        newPanel.add(medium);
+        newPanel.add(hard);
     }
 }
