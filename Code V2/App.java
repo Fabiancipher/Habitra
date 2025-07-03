@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -16,6 +18,7 @@ public class App{
     public static FileWriter writer;
     public static ItemList itemList= new ItemList();
     public static JList<String> habits= new JList<>(itemList.habits.stream().map(Habit::toString).toArray(String[]::new));
+    public static JList<String> tasks= new JList<>(itemList.habits.stream().map(Habit::toString).toArray(String[]::new));
     public static Integer timeSelected, diffSelected;
 
     public static void main(String[] args) {
@@ -131,8 +134,10 @@ public class App{
         diff= new JLabel("Difficulty: ");
         diff.setBounds(525, 500, 100, 20);
         diff.setVisible(true);
+
         addButtonTask();
 
+        startDiffButtons();
         newPanel.add(label);
         newPanel.add(name);
         newPanel.add(deadline);
@@ -152,16 +157,17 @@ public class App{
 
         time= new JLabel("Time: ");
         time.setForeground(Color.decode("#f0e9e9"));
-        time.setBounds(525, 300, 500, 100);
+        time.setBounds(525, 300, 500, 20);
         time.setVisible(true);
 
         diff= new JLabel("Difficulty: ");  
         diff.setForeground(Color.decode("#f0e9e9"));
-        diff.setBounds(525, 500, 500, 100);
+        diff.setBounds(525, 500, 500, 20);
         diff.setVisible(true);
 
-        addButtonHabit();
+        addButtonBadHabit();
 
+        startHabitButtons();
         newPanel.add(label);
         newPanel.add(name);
         newPanel.add(time);
@@ -211,14 +217,66 @@ public class App{
         addButton();
         add.addActionListener(e->{
         popupFrame= new JFrame("Habit Added");
+        String newName= name.getText();
+        Boolean success;
             try{
+                Habit newHabit= new Habit(newName, timeSelected, diffSelected, false, false);
+                itemList.habits.add(newHabit);
+                habits.setListData(itemList.habits.stream().map(Habit::toString).toArray(String[]::new));      
+                JOptionPane.showMessageDialog(popupFrame, "Habit added!");
+                success= true;
+                System.out.println(newHabit.toString());
+            }
+            catch(Exception h){
+                JOptionPane.showMessageDialog(popupFrame, "Couldn´t add habit");
+                success= false;
+            }
+            if(success){
+                try{
                 writer= new FileWriter("archivo.txt",true);
                 writer.write(name.getText());
                 writer.close();
-            }
-            catch(IOException x){
+                }
+                catch(IOException x){
                 System.out.println("Impossible to write on file: "+x);
-            }     
+                }     
+            }
+            newPanel.setVisible(false);
+            panel.setVisible(true);
+        });
+        
+        newPanel.add(add);
+    }
+
+    /**Creates an "add" button for bad habits */
+    private static void addButtonBadHabit(){
+        addButton();
+        add.addActionListener(e->{
+        popupFrame= new JFrame("Bad Habit Added");
+        String newName= name.getText();
+        Boolean success;
+            try{
+                Habit newHabit= new Habit(newName, timeSelected, diffSelected, false, true);
+                itemList.habits.add(newHabit);
+                habits.setListData(itemList.habits.stream().map(Habit::toString).toArray(String[]::new));      
+                JOptionPane.showMessageDialog(popupFrame, "Bad Habit added");
+                success= true;
+                System.out.println(newHabit.toString());
+            }
+            catch(Exception h){
+                JOptionPane.showMessageDialog(popupFrame, "Couldn´t add habit");
+                success= false;
+            }
+            if(success){
+                try{
+                writer= new FileWriter("archivo.txt",true);
+                writer.write(name.getText());
+                writer.close();
+                }
+                catch(IOException x){
+                System.out.println("Impossible to write on file: "+x);
+                }     
+            }
             newPanel.setVisible(false);
             panel.setVisible(true);
         });
@@ -229,18 +287,33 @@ public class App{
     /**Creates an "add" button for tasks*/
     private static void addButtonTask(){
         addButton();
-        
         add.addActionListener(e->{
+        popupFrame= new JFrame("Task Added");
+        String newName= name.getText();
+        String newDead= deadline.getText();
+        Boolean success;
             try{
-                writer= new FileWriter("archivo.txt");
-                writer.write(name.getText());
-                writer.write(time.getText());
-                writer.write(diff.getText());
-                writer.close();
+                Task newTask= new Task(newName, newDead, diffSelected, false);
+                itemList.tasks.add(newTask);
+                tasks.setListData(itemList.tasks.stream().map(Task::toString).toArray(String[]::new));      
+                JOptionPane.showMessageDialog(popupFrame, "Task added!");
+                success= true;
+                System.out.println(newTask.toString());
             }
-            catch(IOException x){
+            catch(Exception h){
+                JOptionPane.showMessageDialog(popupFrame, "Couldn´t add task");
+                success= false;
+            }
+            if(success){
+                try{
+                writer= new FileWriter("archivo.txt",true);
+                writer.write(name.getText());
+                writer.close();
+                }
+                catch(IOException x){
                 System.out.println("Impossible to write on file: "+x);
-            }     
+                }     
+            }
             newPanel.setVisible(false);
             panel.setVisible(true);
         });
@@ -291,47 +364,30 @@ public class App{
         startDiffButtons();
     }
 
+    /**Initializes time buttons */
     public static void startTimeButtons(){
         daily= new JButton("Daily");
         daily.setBounds(625, 300, 100, 40);
         daily.setVisible(true);
-        daily.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                daily.setBackground(Color.decode("#101b82"));
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                daily.setBackground(Color.decode("#ffffff"));
-            }
+        daily.addActionListener(e->{
+            selectTimeButton(daily);
+            timeSelected=3;
         });
 
         monthly= new JButton("Monthly");
         monthly.setBounds(725, 300, 100, 40);
         monthly.setVisible(true);
-        monthly.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                monthly.setBackground(Color.decode("#101b82"));
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                monthly.setBackground(Color.decode("#ffffff"));
-            }
+        monthly.addActionListener(e->{
+            selectTimeButton(monthly);
+            timeSelected=1;
         });
 
         weekly= new JButton("Weekly");
         weekly.setBounds(825, 300, 100, 40);
         weekly.setVisible(true);
-        weekly.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                weekly.setBackground(Color.decode("#101b82"));
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                weekly.setBackground(Color.decode("#ffffff"));
-            }
+        weekly.addActionListener(e->{
+            selectTimeButton(weekly);
+            timeSelected=2;
         });
 
         newPanel.add(daily);
@@ -339,51 +395,58 @@ public class App{
         newPanel.add(weekly);
     }
 
+    /**Initializes difficulty buttons */
     public static void startDiffButtons(){
         easy= new JButton("Easy");
         easy.setBounds(625, 500, 100, 40);
         easy.setVisible(true);
-        easy.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                easy.setBackground(Color.decode("#101b82"));
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                easy.setBackground(Color.decode("#ffffff"));
-            }
+        easy.addActionListener(e->{
+            selectDiffButton(easy);
+            diffSelected=1;
         });
 
         medium= new JButton("Medium");
         medium.setBounds(725, 500, 100, 40);
         medium.setVisible(true);
-        medium.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                medium.setBackground(Color.decode("#101b82"));
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                medium.setBackground(Color.decode("#ffffff"));
-            }
+        medium.addActionListener(e->{
+            selectDiffButton(medium);
+            diffSelected=2;
         });
 
         hard= new JButton("Hard");
         hard.setBounds(825, 500, 100, 40);
         hard.setVisible(true);
-        hard.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                hard.setBackground(Color.decode("#101b82"));
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                hard.setBackground(Color.decode("#ffffff"));
-            }
+        hard.addActionListener(e->{
+            selectDiffButton(hard);
+            diffSelected=3;
         });
 
         newPanel.add(easy);
         newPanel.add(medium);
         newPanel.add(hard);
+    }
+
+    /**Logic for when a time button is selected */
+    public static void selectTimeButton(JButton sButton){
+        JButton[] buttons = {daily, weekly, monthly};
+        for (JButton button : buttons) {
+            if (button == sButton) {
+                button.setBackground(Color.decode("#101b82"));
+            } else {
+                button.setBackground(Color.decode("#ffffff"));
+            }
+        }
+    }
+
+    /**Logic for when a difficulty button is selected */
+    public static void selectDiffButton(JButton sButton){
+        JButton[] buttons = {easy, medium, hard};
+        for (JButton button : buttons) {
+            if (button == sButton) {
+                button.setBackground(Color.decode("#590814"));
+            } else {
+                button.setBackground(Color.decode("#ffffff"));
+            }
+        }
     }
 }
