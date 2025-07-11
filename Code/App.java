@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
+
 import java.lang.Math;
 import java.awt.Color;
 import java.awt.Component;
@@ -316,7 +318,9 @@ public class App{
 
     /**Controls how experience is granted when an habit is selected and completed */
     private static void controlSelectHabits(){ 
-        StringBuilder message= new StringBuilder();
+        for (ListSelectionListener listener : habits.getListSelectionListeners()) {
+            habits.removeListSelectionListener(listener);
+        }
         habits.addListSelectionListener(e->{
             habits.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); //Prevents double firing events
             if(e.getValueIsAdjusting())
@@ -328,7 +332,8 @@ public class App{
                 if(levelUps!=0)//Checks if the user is at level 0
                     levelTreshold= 100*(levelUps*levelUps); //Treshold calculus
                 else
-                    levelTreshold= 100;
+                    levelTreshold= 100;       
+                StringBuilder message= new StringBuilder();
                 int toGoExp= levelTreshold-acuExperience; //How much is needed
                 if(!selectedHabit.getBad()){
                     JOptionPane.showMessageDialog(popupFrame, selectedHabit.getName()+" was completed!");
@@ -357,14 +362,17 @@ public class App{
                         JOptionPane.showMessageDialog(popupFrame, "Current level: "+levelUps);
                     }
                 }
-                selectItem();
+                selectHabits();
             }
         });
     }
 
      /**Controls how experience is granted when a task is selected and completed */
     private static void controlSelectTasks(){ 
-        StringBuilder message= new StringBuilder();
+        for (ListSelectionListener listener : tasks.getListSelectionListeners()) {
+            tasks.removeListSelectionListener(listener);
+        }
+        StringBuilder taskMessage= new StringBuilder();
         tasks.addListSelectionListener(e->{
             tasks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); //Prevents double firing
             if(e.getValueIsAdjusting())
@@ -379,9 +387,9 @@ public class App{
                     levelTreshold= 100;
                 int toGoExp= levelTreshold-acuExperience; //How much is needed
                 JOptionPane.showMessageDialog(popupFrame, selectedTask.getName()+" was completed!");
-                message.append("You were granted: "+selectedTask.getExp()+" experience points\n");
-                message.append("You now have: "+acuExperience+" experience points.");
-                JOptionPane.showMessageDialog(popupFrame, message.toString());
+                taskMessage.append("You were granted: "+selectedTask.getExp()+" experience points\n");
+                taskMessage.append("You now have: "+acuExperience+" experience points.");
+                JOptionPane.showMessageDialog(popupFrame, taskMessage.toString());
                 if(toGoExp>0){
                     JOptionPane.showMessageDialog(popupFrame, "You still need: "+toGoExp+ " to level up.");
                 }
@@ -391,7 +399,7 @@ public class App{
                     JOptionPane.showMessageDialog(popupFrame, "You just leveled up!");
                     JOptionPane.showMessageDialog(popupFrame, "Current level: "+levelUps);
                 }
-                selectItem();
+                selectTaks();
             }
         });
     }
@@ -399,11 +407,27 @@ public class App{
     /**Turns the selected item in the list to a certain color<p>
      * It literally just does that
      */
-    private static void selectItem(){    
+    private static void selectHabits(){    
         habits.setCellRenderer(new DefaultListCellRenderer(){
             @Override
             public Component getListCellRendererComponent(JList<?> habits, Object value, int index, boolean isSelected, boolean cellHasFocus){
                 JLabel label = (JLabel) super.getListCellRendererComponent(habits, value, index, isSelected, cellHasFocus);   
+                if(isSelected){
+                    label.setBackground(Color.decode("#5df542"));
+                    label.setEnabled(false);
+                } 
+                return label;
+            }
+        });
+    }
+    /**Turns the selected item in the list to a certain color<p>
+     * It literally just does that
+     */
+    private static void selectTaks(){    
+        tasks.setCellRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(JList<?> tasks, Object value, int index, boolean isSelected, boolean cellHasFocus){
+                JLabel label = (JLabel) super.getListCellRendererComponent(tasks, value, index, isSelected, cellHasFocus);   
                 if(isSelected){
                     label.setBackground(Color.decode("#5df542"));
                     label.setEnabled(false);
