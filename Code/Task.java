@@ -48,6 +48,6 @@ public class Task implements Item{
     }
     /**Returns task data */
     public String toString(){
-        return "TASK\n"+"Name: "+taskName+"\nDeadline: "+deadline+"\nDifficulty: "+diff+"\nEst.Experience: "+getExp();
+        return "TASK \n "+"Name: "+taskName+" \n Deadline: "+deadline+" \n Difficulty: "+diff+" \n Experience: "+getExp();
     }
 }
