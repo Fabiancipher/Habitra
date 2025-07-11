@@ -7,3 +7,4 @@ Habitra is an application designed to beign an habit tracker that resembless a r
 It also aims to help the user abandon bad habits, by taking experience away from them.
 
 ### [User Manual](https://github.com/Fabiancipher/Habitra/blob/main/Manual/User%20Manual.pdf)
+### [Demo Video](https://youtu.be/1fQIBCC83mg)
